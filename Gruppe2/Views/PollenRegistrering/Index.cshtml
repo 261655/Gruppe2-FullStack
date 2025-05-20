@@ -1,0 +1,21 @@
+@model IEnumerable<Gruppe2.Models.PollenRegistrering>
+
+@{
+    ViewData["Title"] = "Pollenregistreringer";
+}
+
+<h1>Pollenregistreringer</h1>
+<div style="text-align: right; margin-bottom: 20px;">
+    <a asp-action="Edit" asp-route-id="1">Edit</a> |
+    <a asp-action="Details" asp-route-id="1">Details</a> |
+    <a asp-action="Delete" asp-route-id="1">Delete</a>
+</div>
+<table class="table">
+    <thead>
+        <tr>
+            <th>Type of Pollen</th>
+            <th>Level</th>
+            <th>Date</th>
+        </tr>
+    </thead>
+</table>

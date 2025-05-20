@@ -1,7 +1,14 @@
+
+using Gruppe2.Models;
+using Microsoft.EntityFrameworkCore;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+
+builder.Services.AddDbContext<AppDbContext>(options =>
+    options.UseSqlite("Data Source=pollen.db"));
 
 var app = builder.Build();
 
@@ -19,11 +26,14 @@ app.UseRouting();
 app.UseAuthorization();
 
 app.MapStaticAssets();
+app.UseStaticFiles();
+
 
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}")
     .WithStaticAssets();
 
+app.MapDefaultControllerRoute();
 
 app.Run();

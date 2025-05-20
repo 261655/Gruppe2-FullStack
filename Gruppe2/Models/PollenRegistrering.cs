@@ -2,11 +2,11 @@ using System;
 
 namespace Gruppe2.Models
 {
-    public class Pollenregistrering
+    public class PollenRegistrering
     {
         public int ID { get; set; }
-        public DateTime date { get; set; }
+        public DateTime Date { get; set; }
         public string TypeOfPollen { get; set; }
-        public int level { get; set; }
+        public int Level { get; set; }
     }
 }
