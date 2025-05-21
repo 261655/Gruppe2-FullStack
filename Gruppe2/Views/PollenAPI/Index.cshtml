@@ -16,15 +16,17 @@
             <th>Index Description</th>
         </tr>
     </thead>
-    <tbody>
-    @foreach (var item in Model)
+   <tbody>
+    @foreach (var cell in Model)
     {
         <tr>
-            <td>@item.Code</td>
-            <td>@item.DisplayName</td>
-            <td>@item.Value</td>
-            <td>@item.Category</td>
-            <td>@item.IndexDescription</td>
+            <td>@cell.Code</td>
+            <td>@cell.DisplayName</td>
+            <td style="background-color: rgb(@cell.ColorInfo.Red, @cell.ColorInfo.Green, @cell.ColorInfo.Blue);">
+                @cell.Value
+            </td>
+            <td>@cell.Category</td>
+            <td>@cell.IndexDescription</td>
         </tr>
     }
     </tbody>
