@@ -6,7 +6,7 @@
 
 <h1>Pollenregistreringer</h1>
 <div style="text-align: right; margin-bottom: 20px;">
-    <a asp-action="Create" class="btn btn-primary">Opprett ny registrering</a> | @* uten id fordi den lager en ny post og trenger ikke å vite hvilken som skal editers*@
+    <a asp-action="Create" class="btn btn-primary">Opprett ny registrering</a> | 
     <a asp-action="Edit" asp-route-id="1" class="btn btn-primary">Rediger</a> |
     <a asp-action="Delete" asp-route-id="1" class="btn btn-primary">Slett</a>
 </div>
@@ -20,4 +20,3 @@
     </thead>
 </table>
 
-@*kan hende at vi må flytte på edit og delete knap, til å ha i en foreach løkka for å ha det på hver linje med pollenvarsel*@

@@ -1,5 +1,4 @@
 using Microsoft.EntityFrameworkCore;
-using Gruppe2.Models;
 
 namespace Gruppe2.Models
 {
@@ -10,11 +9,8 @@ namespace Gruppe2.Models
         public DbSet<PollenResponse> PollenResponses { get; set; }
         public DbSet<DateInfo> Dateinfos { get; set; }
         public DbSet<PlantInfo> Plantinfos { get; set; }
-        public DbSet<IndexInfo> Indexinfos { get; set; }
+        public DbSet<IndexInfo> IndexInfos { get; set; }
         public DbSet<ColorInfo> Colorinfos { get; set; }
         public DbSet<PollenRegistrering> PollenRegistreringer { get; set; }
-        public DbSet<IndexInfo> IndexInfo { get; set; }
-
-        
     }
 }

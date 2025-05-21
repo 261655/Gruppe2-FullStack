@@ -14,6 +14,7 @@
             <th>Value</th>
             <th>Category</th>
             <th>Index Description</th>
+            <th>Color Info</th>
         </tr>
     </thead>
    <tbody>
@@ -22,11 +23,12 @@
         <tr>
             <td>@cell.Code</td>
             <td>@cell.DisplayName</td>
+            <td>@cell.Category</td>
+            <td>@cell.IndexDescription</td>
+            <td>@cell.ColorInfo</td>
             <td style="background-color: rgb(@cell.ColorInfo.Red, @cell.ColorInfo.Green, @cell.ColorInfo.Blue);">
                 @cell.Value
             </td>
-            <td>@cell.Category</td>
-            <td>@cell.IndexDescription</td>
         </tr>
     }
     </tbody>
