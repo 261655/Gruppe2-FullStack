@@ -1,0 +1,31 @@
+@model IEnumerable<Gruppe2.Models.IndexInfo>
+
+@{
+    ViewData["Title"] = "Pollenvarsel";
+}
+
+<h1>Pollenvarsel – neste 5 dager</h1>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Code</th>
+            <th>Display Name</th>
+            <th>Value</th>
+            <th>Category</th>
+            <th>Index Description</th>
+        </tr>
+    </thead>
+    <tbody>
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>@item.Code</td>
+            <td>@item.DisplayName</td>
+            <td>@item.Value</td>
+            <td>@item.Category</td>
+            <td>@item.IndexDescription</td>
+        </tr>
+    }
+    </tbody>
+</table>

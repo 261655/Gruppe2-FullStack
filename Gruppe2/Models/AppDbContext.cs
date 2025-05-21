@@ -13,6 +13,8 @@ namespace Gruppe2.Models
         public DbSet<IndexInfo> Indexinfos { get; set; }
         public DbSet<ColorInfo> Colorinfos { get; set; }
         public DbSet<PollenRegistrering> PollenRegistreringer { get; set; }
+        public DbSet<IndexInfo> IndexInfo { get; set; }
+
         
     }
 }
