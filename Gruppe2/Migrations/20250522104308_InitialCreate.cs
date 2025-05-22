@@ -57,7 +57,7 @@ namespace Gruppe2.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Indexinfos",
+                name: "IndexInfos",
                 columns: table => new
                 {
                     ID = table.Column<int>(type: "INTEGER", nullable: false)
@@ -71,9 +71,9 @@ namespace Gruppe2.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Indexinfos", x => x.ID);
+                    table.PrimaryKey("PK_IndexInfos", x => x.ID);
                     table.ForeignKey(
-                        name: "FK_Indexinfos_Colorinfos_ColorInfoID",
+                        name: "FK_IndexInfos_Colorinfos_ColorInfoID",
                         column: x => x.ColorInfoID,
                         principalTable: "Colorinfos",
                         principalColumn: "ID",
@@ -95,9 +95,9 @@ namespace Gruppe2.Migrations
                 {
                     table.PrimaryKey("PK_Plantinfos", x => x.ID);
                     table.ForeignKey(
-                        name: "FK_Plantinfos_Indexinfos_IndexInfoID",
+                        name: "FK_Plantinfos_IndexInfos_IndexInfoID",
                         column: x => x.IndexInfoID,
-                        principalTable: "Indexinfos",
+                        principalTable: "IndexInfos",
                         principalColumn: "ID",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -129,8 +129,8 @@ namespace Gruppe2.Migrations
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_Indexinfos_ColorInfoID",
-                table: "Indexinfos",
+                name: "IX_IndexInfos_ColorInfoID",
+                table: "IndexInfos",
                 column: "ColorInfoID");
 
             migrationBuilder.CreateIndex(
@@ -165,7 +165,7 @@ namespace Gruppe2.Migrations
                 name: "Plantinfos");
 
             migrationBuilder.DropTable(
-                name: "Indexinfos");
+                name: "IndexInfos");
 
             migrationBuilder.DropTable(
                 name: "Colorinfos");

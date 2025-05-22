@@ -23,9 +23,14 @@
         <tr>
             <td>@cell.Code</td>
             <td>@cell.DisplayName</td>
+            <td>@cell.Value</td>
             <td>@cell.Category</td>
             <td>@cell.IndexDescription</td>
-            <td>@cell.ColorInfo</td>
+            <td>
+                R: @cell.ColorInfo.Red, 
+                G: @cell.ColorInfo.Green, 
+                B: @cell.ColorInfo.Blue
+            </td>
             <td style="background-color: rgb(@cell.ColorInfo.Red, @cell.ColorInfo.Green, @cell.ColorInfo.Blue);">
                 @cell.Value
             </td>

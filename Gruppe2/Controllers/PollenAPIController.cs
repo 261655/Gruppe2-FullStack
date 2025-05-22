@@ -19,6 +19,7 @@ namespace Gruppe2.Controllers
 
         public async Task<IActionResult> Index()
         {
+            await _service.RyddGamleDataAsync();
             await _service.HentPollenDataAsync();
 
             var data = await _context.IndexInfos

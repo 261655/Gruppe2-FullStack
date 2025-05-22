@@ -11,8 +11,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Gruppe2.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20250521143142_AddIndexInfoTable")]
-    partial class AddIndexInfoTable
+    [Migration("20250522104308_InitialCreate")]
+    partial class InitialCreate
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -92,7 +92,7 @@ namespace Gruppe2.Migrations
 
                     b.HasIndex("ColorInfoID");
 
-                    b.ToTable("IndexInfo");
+                    b.ToTable("IndexInfos");
                 });
 
             modelBuilder.Entity("Gruppe2.Models.PlantInfo", b =>

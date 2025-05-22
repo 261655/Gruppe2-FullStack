@@ -2,6 +2,8 @@ using System.Net.Http;
 using System.Text.Json;
 using System.Threading.Tasks;
 using Gruppe2.Models;
+using Microsoft.EntityFrameworkCore;
+
 
 public class PollenAPIService : IPollenAPIService
 {
@@ -26,27 +28,53 @@ public class PollenAPIService : IPollenAPIService
 
         if (result?.DailyInfo != null)
         {
-            foreach (DailyInfoDto day in result.DailyInfo)
+            foreach (var day in result.DailyInfo)
             {
-            var index = new IndexInfo
+                foreach (var type in day.PollenTypeInfo)
                 {
-                    Code = day.Code,
-                    DisplayName = day.DisplayName,
-                    Value = day.Value,
-                    Category = day.Category,
-                    IndexDescription = day.Description ?? "Ingen beskrivelse tilgjengelig",
-                    ColorInfo = new ColorInfo
+                    var index = type.IndexInfo;
+                    if (index == null || index.Color == null) continue;
+
+                    var existingColor = await _context.Colorinfos.FirstOrDefaultAsync(c =>
+                        c.Red == index.Color.Red.GetValueOrDefault(0) &&
+                        c.Green == index.Color.Green.GetValueOrDefault(0) &&
+                        c.Blue == index.Color.Blue.GetValueOrDefault(0));
+
+                    if (existingColor == null)
                     {
-                        Red = day.Color.Red,
-                        Green = day.Color.Green,
-                        Blue = day.Color.Blue
+                        existingColor = new ColorInfo
+                        {
+                            Red = index.Color.Red.GetValueOrDefault(0),
+                            Green = index.Color.Green.GetValueOrDefault(0),
+                            Blue = index.Color.Blue.GetValueOrDefault(0)
+                        };
+                        _context.Colorinfos.Add(existingColor);
+                        await _context.SaveChangesAsync();
                     }
-                };
 
-                _context.IndexInfos.Add(index);
+                    var pollenIndex = new IndexInfo
+                    {
+                        Code = index.Code,
+                        DisplayName = index.DisplayName,
+                        Value = index.Value,
+                        Category = index.Category,
+                        IndexDescription = index.IndexDescription ?? "Ingen beskrivelse tilgjengelig",
+                        ColorInfoID = existingColor.ID,
+                        ColorInfo = existingColor
+                    };
+
+                    _context.IndexInfos.Add(pollenIndex);
+                }
             }
-
             await _context.SaveChangesAsync();
         }
     }
+    
+    public async Task RyddGamleDataAsync()
+    {
+        _context.IndexInfos.RemoveRange(_context.IndexInfos);
+        _context.Colorinfos.RemoveRange(_context.Colorinfos);
+        await _context.SaveChangesAsync();
+    }
+
 }
