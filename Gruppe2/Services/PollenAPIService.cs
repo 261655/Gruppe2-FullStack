@@ -3,20 +3,36 @@ using System.Text.Json;
 using System.Threading.Tasks;
 using Gruppe2.Models;
 using Microsoft.EntityFrameworkCore;
-
+using System.Collections.Generic;
 
 public class PollenAPIService : IPollenAPIService
 {
     private readonly HttpClient _http;
-    private readonly AppDbContext _context;
 
-    public PollenAPIService(HttpClient http, AppDbContext context)
+    private static readonly Dictionary<string, string> NorskNavn = new()
+    {
+        { "Tree", "Tre" },
+        { "Grass", "Gress" },
+        { "Weed", "Ugress" },
+        { "Ash", "Ask" },
+        { "Oak", "Eik" },
+        { "Pine", "Furu" },
+        { "Birch", "Bjørk" },
+        { "Olive", "Oliven" },
+        { "Grasses", "Gressarter" },
+        { "Alder", "Or" },
+        { "Ragweed", "Burot" },
+        { "Mugwort", "Burot" },
+        { "Hazel", "Hassel" },
+        { "Cottonwood", "Poppel" },
+        { "Graminales", "Gressfamilien" }
+    };
+    public PollenAPIService(HttpClient http)
     {
         _http = http;
-        _context = context;
     }
 
-    public async Task HentPollenDataAsync()
+    public async Task<List<PollenDisplayDto>> HentDisplayDataAsync()
     {
         string url = "https://pollen.googleapis.com/v1/forecast:lookup?key=AIzaSyCcJ3vf6FXeMkfgdGuJytfRuh6PQ_tDJ7U&location.longitude=10.40762&location.latitude=59.26754&days=5";
 
@@ -26,55 +42,59 @@ public class PollenAPIService : IPollenAPIService
             response,
             new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
 
+        var liste = new List<PollenDisplayDto>();
+
         if (result?.DailyInfo != null)
         {
             foreach (var day in result.DailyInfo)
             {
+                string datoStr = $"{day.Date.Day}.{day.Date.Month}.";
+                
+                
+
                 foreach (var type in day.PollenTypeInfo)
                 {
                     var index = type.IndexInfo;
-                    if (index == null || index.Color == null) continue;
+                    var color = index?.Color;
 
-                    var existingColor = await _context.Colorinfos.FirstOrDefaultAsync(c =>
-                        c.Red == index.Color.Red.GetValueOrDefault(0) &&
-                        c.Green == index.Color.Green.GetValueOrDefault(0) &&
-                        c.Blue == index.Color.Blue.GetValueOrDefault(0));
+                    if (index == null || color == null) continue;
 
-                    if (existingColor == null)
+                    liste.Add(new PollenDisplayDto
                     {
-                        existingColor = new ColorInfo
-                        {
-                            Red = index.Color.Red.GetValueOrDefault(0),
-                            Green = index.Color.Green.GetValueOrDefault(0),
-                            Blue = index.Color.Blue.GetValueOrDefault(0)
-                        };
-                        _context.Colorinfos.Add(existingColor);
-                        await _context.SaveChangesAsync();
-                    }
-
-                    var pollenIndex = new IndexInfo
-                    {
-                        Code = index.Code,
-                        DisplayName = index.DisplayName,
+                        Date = datoStr,
+                        Code = type.Code ?? "-",
+                        DisplayName = NorskNavn.TryGetValue(type.DisplayName ?? "", out var norskNavn) ? norskNavn : type.DisplayName,
                         Value = index.Value,
-                        Category = index.Category,
-                        IndexDescription = index.IndexDescription ?? "Ingen beskrivelse tilgjengelig",
-                        ColorInfoID = existingColor.ID,
-                        ColorInfo = existingColor
-                    };
+                        Category = index.Category ?? "-",
+                        IndexDescription = index.IndexDescription ?? "-",
+                        Red = color.Red ?? 0,
+                        Green = color.Green ?? 0,
+                        Blue = color.Blue ?? 0
+                    });
+                }
 
-                    _context.IndexInfos.Add(pollenIndex);
+                foreach (var plant in day.PlantInfo)
+                {
+                    var index = plant.IndexInfo;
+                    var color = index?.Color;
+
+                    if (index == null || color == null) continue;
+
+                    liste.Add(new PollenDisplayDto
+                    {
+                        Date = datoStr,
+                        Code = plant.Code ?? "-",
+                        DisplayName = NorskNavn.TryGetValue(plant.DisplayName ?? "", out var norskNavn)? norskNavn : plant.DisplayName,
+                        Value = index.Value,
+                        Category = index.Category ?? "-",
+                        IndexDescription = index.IndexDescription ?? "-",
+                        Red = color.Red ?? 0,
+                        Green = color.Green ?? 0,
+                        Blue = color.Blue ?? 0
+                    });
                 }
             }
-            await _context.SaveChangesAsync();
         }
+        return liste;
     }
-    
-    public async Task RyddGamleDataAsync()
-    {
-        _context.IndexInfos.RemoveRange(_context.IndexInfos);
-        _context.Colorinfos.RemoveRange(_context.Colorinfos);
-        await _context.SaveChangesAsync();
-    }
-
 }

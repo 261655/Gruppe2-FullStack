@@ -6,7 +6,7 @@ namespace Gruppe2.Controllers;
 
 public class PollenRegistreringController : Controller
 {
-    public AppDbContext _context; // Evt sette tilbake til private readonly
+    public AppDbContext _context; 
 
     public PollenRegistreringController(AppDbContext context)
     {
@@ -22,6 +22,4 @@ public class PollenRegistreringController : Controller
     public IActionResult Edit(int id) => View();
     public IActionResult Details(int id) => View();
     public IActionResult Delete(int id) => View();
-
-
 }

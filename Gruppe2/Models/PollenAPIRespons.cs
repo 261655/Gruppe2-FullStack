@@ -32,6 +32,11 @@ namespace Gruppe2.Models
         [JsonPropertyName("pollenTypeInfo")]
         public List<PollenTypeDto> PollenTypeInfo { get; set; } = new();
 
+        [JsonPropertyName("date")]
+        public DateDto Date { get; set; }
+
+        [JsonPropertyName("plantInfo")]
+        public List<PlantInfoDto> PlantInfo { get; set; } = new();
     }
 
     public class PollenTypeDto
@@ -74,4 +79,40 @@ namespace Gruppe2.Models
         public float? Blue { get; set; }
     }
 
+    public class PollenDisplayDto
+    {
+        public string Date { get; set; }         
+        public string Code { get; set; }         
+        public string DisplayName { get; set; }  
+        public int Value { get; set; }
+        public string Category { get; set; }
+        public string IndexDescription { get; set; }
+        public float Red { get; set; }
+        public float Green { get; set; }
+        public float Blue { get; set; }
+    }
+
+    public class DateDto
+    {
+        [JsonPropertyName("year")]
+        public int Year { get; set; }
+
+        [JsonPropertyName("month")]
+        public int Month { get; set; }
+
+        [JsonPropertyName("day")]
+        public int Day { get; set; }
+    }
+
+    public class PlantInfoDto
+    {
+        [JsonPropertyName("code")]
+        public string Code { get; set; }
+
+        [JsonPropertyName("displayName")]
+        public string DisplayName { get; set; }
+
+        [JsonPropertyName("indexInfo")]
+        public IndexInfoDto IndexInfo { get; set; }
+    }
 }

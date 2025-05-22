@@ -7,7 +7,6 @@ namespace Gruppe2.Models
         public string DisplayName { get; set; }
         public bool InSeason { get; set; }
         public int IndexInfoID { get; set; }
-
         public IndexInfo IndexInfo { get; set; }
         public ICollection<PollenResponse> PollenResponses { get; set; }
     }

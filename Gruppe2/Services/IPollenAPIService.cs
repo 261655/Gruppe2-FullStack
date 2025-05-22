@@ -1,8 +1,10 @@
-using Gruppe2.Models;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
-public interface IPollenAPIService
+namespace Gruppe2.Models
 {
-    Task HentPollenDataAsync();
-    Task RyddGamleDataAsync();
-
+    public interface IPollenAPIService
+    {
+        Task<List<PollenDisplayDto>> HentDisplayDataAsync();
+    }
 }

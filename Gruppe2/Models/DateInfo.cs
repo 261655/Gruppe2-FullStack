@@ -6,7 +6,6 @@ namespace Gruppe2.Models
         public int Year { get; set; }
         public int Month { get; set; }
         public int Day { get; set; }
-
         public ICollection<PollenResponse> PollenResponses { get; set; }
     }
 }

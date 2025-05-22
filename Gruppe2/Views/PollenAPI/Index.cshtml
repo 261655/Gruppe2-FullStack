@@ -1,14 +1,15 @@
-@model IEnumerable<Gruppe2.Models.IndexInfo>
+@model IEnumerable<Gruppe2.Models.PollenDisplayDto>
 
 @{
     ViewData["Title"] = "Pollenvarsel";
 }
 
-<h1>Pollenvarsel – neste 5 dager</h1>
+<h1>Pollenvarsel – neste 5 dagene</h1>
 
 <table class="table">
     <thead>
         <tr>
+            <th>Date</th>
             <th>Code</th>
             <th>Display Name</th>
             <th>Value</th>
@@ -17,24 +18,19 @@
             <th>Color Info</th>
         </tr>
     </thead>
-   <tbody>
-    @foreach (var cell in Model)
-    {
-        <tr>
-            <td>@cell.Code</td>
-            <td>@cell.DisplayName</td>
-            <td>@cell.Value</td>
-            <td>@cell.Category</td>
-            <td>@cell.IndexDescription</td>
-            <td>
-                R: @cell.ColorInfo.Red, 
-                G: @cell.ColorInfo.Green, 
-                B: @cell.ColorInfo.Blue
-            </td>
-            <td style="background-color: rgb(@cell.ColorInfo.Red, @cell.ColorInfo.Green, @cell.ColorInfo.Blue);">
-                @cell.Value
-            </td>
-        </tr>
-    }
+    <tbody>
+        @foreach (var row in Model)
+        {
+            <tr>
+                <td>@row.Date</td>
+                <td>@row.Code</td>
+                <td>@row.DisplayName</td>
+                <td>@row.Value</td>
+                <td>@row.Category</td>
+                <td>@row.IndexDescription</td>
+                <td style="background-color: rgb(@(row.Red * 255), @(row.Green * 255), @(row.Blue * 255));">
+                </td>
+            </tr>
+        }
     </tbody>
 </table>

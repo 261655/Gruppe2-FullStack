@@ -9,7 +9,6 @@ namespace Gruppe2.Models
         public string Category { get; set; }
         public string IndexDescription { get; set; }
         public int ColorInfoID { get; set; }
-
         public ColorInfo ColorInfo { get; set; }
         public ICollection<PlantInfo> PlantInfos { get; set; }
     }

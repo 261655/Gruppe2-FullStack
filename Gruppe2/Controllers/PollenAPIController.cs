@@ -16,17 +16,9 @@ namespace Gruppe2.Controllers
             _context = context;
             _service = service;
         }
-
         public async Task<IActionResult> Index()
         {
-            await _service.RyddGamleDataAsync();
-            await _service.HentPollenDataAsync();
-
-            var data = await _context.IndexInfos
-                                     .Include(i => i.ColorInfo)
-                                     .OrderByDescending(i => i.ID)
-                                     .Take(5)
-                                     .ToListAsync();
+            var data = await _service.HentDisplayDataAsync();
             return View(data);
         }
     }
